@@ -16,9 +16,9 @@ class House extends Model
         'status' => 'string',
     ];
 
-    public function houseOccupancies(): HasMany
+    public function houseResidentHistories(): HasMany
     {
-        return $this->hasMany(HouseOccupancy::class);
+        return $this->hasMany(HouseResidentHistory::class);
     }
 
     public function bills(): HasMany

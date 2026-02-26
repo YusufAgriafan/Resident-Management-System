@@ -5,8 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class HouseOccupancy extends Model
+class HouseResidentHistory extends Model
 {
+    protected $table = 'house_resident_history';
+
     protected $fillable = [
         'house_id',
         'resident_id',
