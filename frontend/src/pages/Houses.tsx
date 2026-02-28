@@ -11,6 +11,7 @@ const Houses: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [showAssignModal, setShowAssignModal] = useState(false);
+  const [showHistoryModal, setShowHistoryModal] = useState(false);
   const [editingHouse, setEditingHouse] = useState<House | null>(null);
   const [selectedHouse, setSelectedHouse] = useState<House | null>(null);
   const [formData, setFormData] = useState({
@@ -149,6 +150,11 @@ const Houses: React.FC = () => {
     }
   };
 
+  const handleShowHistory = (house: House) => {
+    setSelectedHouse(house);
+    setShowHistoryModal(true);
+  };
+
   if (loading) {
     return <div className="loading">Loading houses...</div>;
   }
@@ -172,6 +178,7 @@ const Houses: React.FC = () => {
               <th>No</th>
               <th>Kode Rumah</th>
               <th>Status</th>
+              <th>Penghuni Aktif</th>
               <th>Aksi</th>
             </tr>
           </thead>
@@ -186,12 +193,23 @@ const Houses: React.FC = () => {
                   </span>
                 </td>
                 <td>
+                  {house.house_resident_histories?.find(
+                    (h) => h.end_date === null,
+                  )?.resident?.name || "-"}
+                </td>
+                <td>
                   <div className="action-buttons">
                     <button
                       className="btn-icon btn-edit"
                       onClick={() => handleOpenModal(house)}
                       title="Edit">
                       ✏️
+                    </button>
+                    <button
+                      className="btn-icon"
+                      onClick={() => handleShowHistory(house)}
+                      title="Lihat History">
+                      📋
                     </button>
                     {house.status === "vacant" ? (
                       <button
@@ -345,6 +363,77 @@ const Houses: React.FC = () => {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {showHistoryModal && selectedHouse && (
+        <div
+          className="modal-overlay"
+          onClick={() => setShowHistoryModal(false)}>
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h3>📋 History Penghuni - {selectedHouse.code}</h3>
+              <button
+                className="modal-close"
+                onClick={() => setShowHistoryModal(false)}>
+                ×
+              </button>
+            </div>
+            <div style={{ padding: "1.5rem" }}>
+              {selectedHouse.house_resident_histories &&
+              selectedHouse.house_resident_histories.length > 0 ? (
+                <table className="data-table">
+                  <thead>
+                    <tr>
+                      <th>Nama Penghuni</th>
+                      <th>Tanggal Mulai</th>
+                      <th>Tanggal Selesai</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {selectedHouse.house_resident_histories.map((history) => (
+                      <tr key={history.id}>
+                        <td>{history.resident?.name || "N/A"}</td>
+                        <td>
+                          {new Date(history.start_date).toLocaleDateString(
+                            "id-ID",
+                          )}
+                        </td>
+                        <td>
+                          {history.end_date
+                            ? new Date(history.end_date).toLocaleDateString(
+                                "id-ID",
+                              )
+                            : "-"}
+                        </td>
+                        <td>
+                          <span
+                            className={`badge ${
+                              history.end_date === null ? "occupied" : "vacant"
+                            }`}>
+                            {history.end_date === null ? "Aktif" : "Selesai"}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              ) : (
+                <p style={{ textAlign: "center", color: "#6b7280" }}>
+                  Belum ada history penghuni
+                </p>
+              )}
+            </div>
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="btn-secondary"
+                onClick={() => setShowHistoryModal(false)}>
+                Tutup
+              </button>
+            </div>
           </div>
         </div>
       )}

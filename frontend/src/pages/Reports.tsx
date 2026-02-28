@@ -132,7 +132,7 @@ const Reports: React.FC = () => {
           </div>
 
           {/* Expenses by Category */}
-          {monthlySummary.expenses_by_category &&
+          {/* {monthlySummary.expenses_by_category &&
             monthlySummary.expenses_by_category.length > 0 && (
               <div className="table-container" style={{ marginTop: "1.5rem" }}>
                 <h4 style={{ padding: "1rem 1rem 0", margin: 0 }}>
@@ -159,7 +159,7 @@ const Reports: React.FC = () => {
                   </tbody>
                 </table>
               </div>
-            )}
+            )} */}
         </div>
       )}
 

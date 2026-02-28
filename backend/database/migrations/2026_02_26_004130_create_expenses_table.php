@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->decimal('amount', 15, 2);
             $table->date('expense_date');
-            $table->enum('category', ['bulanan', 'insidental']);
+            $table->enum('category', ['salary', 'maintenance', 'utilities', 'security', 'cleaning', 'others']);
             $table->timestamps();
         });
     }

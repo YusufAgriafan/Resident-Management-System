@@ -7,6 +7,7 @@ export interface House {
   status: "occupied" | "vacant";
   created_at: string;
   updated_at: string;
+  house_resident_histories?: HouseResidentHistory[];
 }
 
 export interface HouseResidentHistory {

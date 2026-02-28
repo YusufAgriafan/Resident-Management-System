@@ -38,6 +38,26 @@ const Bills: React.FC = () => {
     loadHouses();
   }, []);
 
+  // Auto-select resident when house is selected
+  useEffect(() => {
+    if (formData.house_id && houses.length > 0) {
+      const selectedHouse = houses.find(
+        (h) => h.id === Number(formData.house_id),
+      );
+      if (selectedHouse?.house_resident_histories) {
+        const activeResident = selectedHouse.house_resident_histories.find(
+          (history) => history.end_date === null,
+        );
+        if (activeResident) {
+          setFormData((prev) => ({
+            ...prev,
+            resident_id: activeResident.resident_id.toString(),
+          }));
+        }
+      }
+    }
+  }, [formData.house_id, houses]);
+
   const loadBills = async () => {
     try {
       setLoading(true);
@@ -268,7 +288,8 @@ const Bills: React.FC = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, resident_id: e.target.value })
                   }
-                  required>
+                  required
+                  disabled={!!formData.house_id}>
                   <option value="">-- Pilih Penghuni --</option>
                   {residents.map((resident) => (
                     <option key={resident.id} value={resident.id}>
@@ -276,6 +297,11 @@ const Bills: React.FC = () => {
                     </option>
                   ))}
                 </select>
+                {formData.house_id && (
+                  <small style={{ color: "#6b7280", marginTop: "0.5rem" }}>
+                    Penghuni otomatis dipilih berdasarkan rumah yang dihuni
+                  </small>
+                )}
               </div>
               <div
                 className="form-group"
