@@ -191,11 +191,13 @@ chmod -R 775 storage bootstrap/cache
 Jika port 8000 atau 5173 sudah digunakan, dapat menggunakan port alternatif:
 
 Backend:
+
 ```bash
 php artisan serve --port=8001
 ```
 
 Frontend:
+
 ```bash
 npm run dev -- --port=3000
 ```
@@ -215,6 +217,7 @@ Jika ingin melakukan deployment atau membuat production build:
 ### Backend
 
 Untuk backend tidak memerlukan build khusus, namun pastikan untuk:
+
 1. Set `APP_ENV=production` di file `.env`
 2. Set `APP_DEBUG=false` di file `.env`
 3. Jalankan `composer install --optimize-autoloader --no-dev`
@@ -226,9 +229,3 @@ Untuk backend tidak memerlukan build khusus, namun pastikan untuk:
 ```bash
 npm run build
 ```
-
-Hasil build akan tersimpan di folder `dist/`. File-file tersebut dapat langsung diupload ke hosting atau web server.
-
----
-
-Demikian panduan instalasi untuk project ini. Jika ada pertanyaan atau menemui error, silakan periksa kembali langkah-langkah di atas atau buka issue di GitHub repository.
