@@ -21,7 +21,7 @@ return new class extends Migration
             $table->decimal('security_fee', 15, 2);
             $table->decimal('maintenance_fee', 15, 2);
             $table->decimal('total', 15, 2);
-            $table->enum('status', ['belum_lunas', 'lunas']);
+            $table->enum('status', ['unpaid', 'partial', 'paid']);
             $table->timestamps();
         });
     }

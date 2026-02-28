@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('houses', function (Blueprint $table) {
             $table->id();
             $table->string('code');
-            $table->enum('status', ['dihuni', 'tidak dihuni']);
+            $table->enum('status', ['occupied', 'vacant']);
             $table->timestamps();
         });
     }

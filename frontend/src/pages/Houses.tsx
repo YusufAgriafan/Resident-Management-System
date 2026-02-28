@@ -82,7 +82,17 @@ const Houses: React.FC = () => {
       loadHouses();
       handleCloseModal();
     } catch (error: any) {
-      alert(error.response?.data?.message || "Failed to save house");
+      console.error("Error saving house:", error);
+      const errorMessage =
+        error.response?.data?.message ||
+        error.response?.data?.errors ||
+        error.message ||
+        "Failed to save house";
+      alert(
+        typeof errorMessage === "object"
+          ? JSON.stringify(errorMessage)
+          : errorMessage,
+      );
     }
   };
 

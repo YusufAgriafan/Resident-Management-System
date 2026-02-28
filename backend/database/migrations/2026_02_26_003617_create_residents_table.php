@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('ktp');
             $table->string('phone');
-            $table->enum('resident_type', ['tetap', 'kontrak']);
-            $table->enum('marital_status', ['sudah menikah', 'belum menikah']);
+            $table->enum('resident_type', ['permanent', 'contract']);
+            $table->enum('marital_status', ['single', 'married']);
             $table->timestamps();
         });
     }
